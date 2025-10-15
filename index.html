@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <title>Bat-Ball-Stump Game</title>
+
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+    <!--Heading-->
+    <h1 id="h1">Bat Ball Stump Game</h1>
+
+    <!--image-->
+    
+
+    <!--creating button by which user can choose Bat-->
+    <button class="choice-button"
+    onclick="
+    //calling function to generate computer random choice and store it into a variable
+    let computerChoice=generateComputerChoice();
+    //calling function and storing the result.
+    let result=getResult('Bat',computerChoice);
+    //calling function for alert msg
+    showResult('Bat',computerChoice,result);
+   "><img src="Cricket Bat Cartoon Style.jpg" alt="Bat Image" class="choice-iamge"></button>
+
+
+ 
+    <!--creating button using which user can choose ball-->
+    <button class="choice-button"
+    onclick="
+     //calling function to generate computer random choice and store it into a variable
+    computerChoice=generateComputerChoice();
+    //calling function and storing the result.
+    result=getResult('Ball',computerChoice);
+    //calling function for alert msg
+    showResult('Ball',computerChoice,result);
+    "><img src="cricket ball.jpg" alt="ball-image" class="choice-iamge"></button>
+
+     <!--creating button using which user can choose stump-->
+    <button class="choice-button"
+    onclick="
+    //here when we call the function we will take the return value of that function.
+    computerChoice=generateComputerChoice();
+     //calling function and storing the result.
+    result=getResult('Stump',computerChoice);
+    //calling function for alert msg
+    showResult('Stump',computerChoice,result);
+    "
+    ><img src="wicket.jpg" alt="Stump Image" class="choice-iamge"></button>
+
+  
+   
+
+    <h3 id="user-move"></h3>
+    <h3 id="computer-move"></h3>
+    <h3 id="result"></h3>
+    <h3 id="score"></h3>
+
+     <!--Reset Button-->
+    <button class="reset-button" onclick="
+    localStorage.clear()
+   //this will completely clear the memory and the score counting will start from begining
+     resetScore();
+    
+    ">Reset</button>
+
+
+
+    <script>
+
+        //creating an object for maintaining score
+
+        let scoreStr=localStorage.getItem('Score');
+        let score;
+        resetScore(scoreStr);
+
+        function resetScore(scoreStr)
+        {
+            score= scoreStr ? JSON.parse(scoreStr) :{
+            win:0,
+            lost:0,
+            tie:0,    
+        };
+
+        
+         //create a method for display the score 
+           score.displayScore= function(){
+                return `Your Score is
+            Win=${score.win},Lost=${score.lost},Tie=${score.tie}`;
+            } 
+            //we call showResult method becz when reset button is clicked the score will updated into 0,0,0. But we don't have any value to show here. So we call the method without any value, so that it will show undefied. And after that will manage it in show result method.
+                showResult();
+        }
+       
+
+
+        //creating a function for generating computer choice
+       // let computerChoice;//global variable
+       //but here we don't use global variable. Insted of it we will use return statement.
+       
+        function generateComputerChoice(){
+             let randomNumber=Math.random()*3;// we use *3 because Math.random generate number from 0 to 1, but we want number from 0 to 3.
+
+             if(randomNumber<=1)//if randomdom number is from 0 to 1 computer choice will be bat.
+             {
+                //computerChoice='Bat'; we will not using any extra variable to to store the computer choice.
+                //we directly return the computer choice.
+                return 'Bat';
+             }
+             else if(randomNumber<=2)//if randomdom number is from 0 to 1 computer choice will be ball.
+             {
+                 return 'Ball';
+             }
+             else //if randomdom number is from 0 to 1 computer choice will be stump.
+             {
+                 return 'Stump';
+             }
+
+             console.log(`Computer Choice is: ${computerChoice}`);
+        }
+
+
+        //creating function for generate result on the basis of computer choice and user choice.
+
+        function getResult(userMove, computerMove)
+        {
+            //when userMove is Bat
+            if(userMove==='Bat'){
+                if(computerMove==='Ball')
+              {
+                score.win++;//when user win the score.win will increased by 1.
+                return 'User Won';
+              }
+                else if(computerMove==='Bat')
+              {
+                score.tie++;//when computer wins
+                return 'Match Tie';
+              }
+                else if(computerMove==='Stump')
+              {
+                score.lost++//when it is tie
+                return 'Computer Wons';
+              }
+            }
+            //when userMove is ball
+            else if(userMove==='Ball'){
+                
+                if(computerMove==='Bat')
+                {
+                    score.lost++;//when computer wins
+                    return 'Computer Wons';
+                }
+                if(computerMove==='Ball')
+                {
+                    score.tie++//when it is tie
+                    return 'Match Tie';
+                }
+                if(computerMove==='Stump')
+                {
+                    score.win++;//when user win the score.win will increased by 1.
+                    return 'User Won';
+                }
+
+            }
+            //when userMove is stump
+            else{
+                if(computerMove==='Bat')
+                {
+                    score.win++;//when user win the score.win will increased by 1.
+                    return 'User Won';
+                }
+                else if(computerMove==='Ball')
+                {
+                    score.lost++;//when computer wins
+                    return 'Computer Won';
+                }
+                else if(computerMove==='Stump')
+                {
+                    score.tie++//when it is tie
+                    return 'Match Tie';
+                }
+            }
+        }
+       
+        //create function for showing alert msg
+        function  showResult(userMove,computerMove,result)
+        {
+            //storing the score in local storage
+            localStorage.setItem('Score', JSON.stringify(score));
+
+            //it will show the updation on screen
+           document.querySelector('#user-move').innerText=
+            userMove!== undefined ? `You have chosen ${userMove}` : ''; // if user move is chosen than show it or else it will empty string
+
+           document.querySelector('#computer-move').innerText=
+            computerMove !== undefined ? `Computer Choice is ${computerMove}` : '';
+
+           document.querySelector('#result').innerText=
+            result !== undefined ? result : '';
+
+           document.querySelector('#score').innerText=`${score.displayScore()}`;
+
+
+
+
+
+           //this will create an alert message 
+            //alert(`You have chosen ${userMove}, 
+            
+           // Computer Choice is ${computerMove} and ${result}
+      //  ${score.displayScore()}`); //call the function to display the score .
+        }
+
+    </script>
+</body>
+</html>

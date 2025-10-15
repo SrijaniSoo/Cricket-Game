@@ -1,0 +1,93 @@
+body{
+    text-align: center;
+    background-image: url("background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    }
+
+/*Heading*/
+#h1{
+    color: bisque;
+    font-size: 50px;
+    
+}
+
+
+
+/*Button*/
+.choice-button{
+  height: 200px;
+  width: 200px;
+  border-color: antiquewhite;
+  border-radius: 116px;
+  margin: 20px;
+  cursor: pointer;
+}
+
+/*Button Hover*/
+.choice-button:hover{
+    background-position: right;
+    background-color:red;
+    transform: scale(1.2);
+}
+
+/*Button Image*/
+.choice-iamge{
+    height: 190px;
+    width: 190px;
+    border-radius: 116px;
+}
+
+
+/*Result Text*/
+
+#user-move{
+    font-size: 30px;
+    color: bisque;
+    line-height: 2px;
+}
+
+#computer-move{
+    font-size: 30px;
+    color: bisque;
+    line-height: 2px;
+}
+
+#result{
+    font-size: 30px;
+    color: bisque;
+     line-height: 2px;
+}
+
+#score{
+    font-size: 30px;
+    color: bisque;
+    
+}
+
+
+
+/*Reset Button*/
+.reset-button{
+   height: 50px ;
+   width: 127px;
+  background-color: rgb(145, 4, 4);
+  border-radius: 20px;
+  border-color: none;
+  color: bisque;
+  font-size: 20px;
+}
+
+/*Reset Button Hover*/
+
+.reset-button:hover{
+    background-color: yellow;
+    color: red;
+    transform: scale(1.2);
+}
+
+
+
+
+
+
